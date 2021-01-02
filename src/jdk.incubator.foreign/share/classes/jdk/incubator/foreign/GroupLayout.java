@@ -58,7 +58,7 @@ import java.util.stream.Collectors;
  * @implSpec
  * This class is immutable and thread-safe.
  */
-public final class GroupLayout extends AbstractLayout {
+public final class GroupLayout extends AbstractLayout<GroupLayout> {
 
     /**
      * The group kind.
@@ -192,32 +192,5 @@ public final class GroupLayout extends AbstractLayout {
         return Optional.of(decorateLayoutConstant(DynamicConstantDesc.ofNamed(
                     ConstantDescs.BSM_INVOKE, kind.name().toLowerCase(),
                 CD_GROUP_LAYOUT, constants)));
-    }
-
-    //hack: the declarations below are to make javadoc happy; we could have used generics in AbstractLayout
-    //but that causes issues with javadoc, see JDK-8224052
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GroupLayout withName(String name) {
-        return (GroupLayout)super.withName(name);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GroupLayout withBitAlignment(long alignmentBits) {
-        return (GroupLayout)super.withBitAlignment(alignmentBits);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GroupLayout withAttribute(String name, Constable value) {
-        return (GroupLayout)super.withAttribute(name, value);
     }
 }

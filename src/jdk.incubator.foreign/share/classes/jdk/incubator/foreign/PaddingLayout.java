@@ -50,7 +50,7 @@ import java.util.OptionalLong;
  * @implSpec
  * This class is immutable and thread-safe.
  */
-/* package-private */ final class PaddingLayout extends AbstractLayout implements MemoryLayout {
+/* package-private */ final class PaddingLayout extends AbstractLayout<PaddingLayout> implements MemoryLayout {
 
     PaddingLayout(long size) {
         this(size, 1, Map.of());
@@ -99,32 +99,5 @@ import java.util.OptionalLong;
     public Optional<DynamicConstantDesc<MemoryLayout>> describeConstable() {
         return Optional.of(decorateLayoutConstant(DynamicConstantDesc.ofNamed(ConstantDescs.BSM_INVOKE, "padding",
                 CD_MEMORY_LAYOUT, MH_PADDING, bitSize())));
-    }
-
-    //hack: the declarations below are to make javadoc happy; we could have used generics in AbstractLayout
-    //but that causes issues with javadoc, see JDK-8224052
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PaddingLayout withName(String name) {
-        return (PaddingLayout)super.withName(name);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PaddingLayout withBitAlignment(long alignmentBits) {
-        return (PaddingLayout)super.withBitAlignment(alignmentBits);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PaddingLayout withAttribute(String name, Constable value) {
-        return (PaddingLayout)super.withAttribute(name, value);
     }
 }

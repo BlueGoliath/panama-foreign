@@ -48,7 +48,7 @@ import static java.lang.constant.ConstantDescs.BSM_INVOKE;
 import static java.lang.constant.ConstantDescs.CD_String;
 import static java.lang.constant.ConstantDescs.CD_long;
 
-abstract class AbstractLayout implements MemoryLayout {
+abstract class AbstractLayout<E extends MemoryLayout> implements MemoryLayout {
 
     private final OptionalLong size;
     final long alignment;
@@ -61,7 +61,7 @@ abstract class AbstractLayout implements MemoryLayout {
     }
 
     @Override
-    public AbstractLayout withName(String name) {
+    public E withName(String name) {
         Objects.requireNonNull(name);
         return withAttribute(LAYOUT_NAME, name);
     }
@@ -83,17 +83,17 @@ abstract class AbstractLayout implements MemoryLayout {
     }
 
     @Override
-    public AbstractLayout withAttribute(String name, Constable value) {
+    public E withAttribute(String name, Constable value) {
         Objects.requireNonNull(name);
         Map<String, Constable> newAttributes = new HashMap<>(attributes);
         newAttributes.put(name, value);
         return dup(alignment, newAttributes);
     }
 
-    abstract AbstractLayout dup(long alignment, Map<String, Constable> annos);
+    abstract E dup(long alignment, Map<String, Constable> annos);
 
     @Override
-    public AbstractLayout withBitAlignment(long alignmentBits) {
+    public E withBitAlignment(long alignmentBits) {
         checkAlignment(alignmentBits);
         return dup(alignmentBits, attributes);
     }

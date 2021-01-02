@@ -67,7 +67,7 @@ MemoryLayout.ofStruct(
  * @implSpec
  * This class is immutable and thread-safe.
  */
-public final class SequenceLayout extends AbstractLayout {
+public final class SequenceLayout extends AbstractLayout<SequenceLayout> {
 
     private final OptionalLong elemCount;
     private final MemoryLayout elementLayout;
@@ -271,32 +271,5 @@ public final class SequenceLayout extends AbstractLayout {
                         CD_SEQUENCE_LAYOUT, MH_SIZED_SEQUENCE, elemCount.getAsLong(), elementLayout.describeConstable().get()) :
                 DynamicConstantDesc.ofNamed(ConstantDescs.BSM_INVOKE, "value",
                         CD_SEQUENCE_LAYOUT, MH_UNSIZED_SEQUENCE, elementLayout.describeConstable().get())));
-    }
-
-    //hack: the declarations below are to make javadoc happy; we could have used generics in AbstractLayout
-    //but that causes issues with javadoc, see JDK-8224052
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public SequenceLayout withName(String name) {
-        return (SequenceLayout)super.withName(name);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public SequenceLayout withBitAlignment(long alignmentBits) {
-        return (SequenceLayout)super.withBitAlignment(alignmentBits);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public SequenceLayout withAttribute(String name, Constable value) {
-        return (SequenceLayout)super.withAttribute(name, value);
     }
 }

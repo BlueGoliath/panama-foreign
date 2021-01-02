@@ -52,7 +52,7 @@ import java.util.OptionalLong;
  * @implSpec
  * This class is immutable and thread-safe.
  */
-public final class ValueLayout extends AbstractLayout implements MemoryLayout {
+public final class ValueLayout extends AbstractLayout<ValueLayout> implements MemoryLayout {
 
     private final ByteOrder order;
 
@@ -122,32 +122,5 @@ public final class ValueLayout extends AbstractLayout implements MemoryLayout {
     public Optional<DynamicConstantDesc<ValueLayout>> describeConstable() {
         return Optional.of(decorateLayoutConstant(DynamicConstantDesc.ofNamed(ConstantDescs.BSM_INVOKE, "value",
                 CD_VALUE_LAYOUT, MH_VALUE, bitSize(), order == ByteOrder.BIG_ENDIAN ? BIG_ENDIAN : LITTLE_ENDIAN)));
-    }
-
-    //hack: the declarations below are to make javadoc happy; we could have used generics in AbstractLayout
-    //but that causes issues with javadoc, see JDK-8224052
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ValueLayout withName(String name) {
-        return (ValueLayout)super.withName(name);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ValueLayout withBitAlignment(long alignmentBits) {
-        return (ValueLayout)super.withBitAlignment(alignmentBits);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ValueLayout withAttribute(String name, Constable value) {
-        return (ValueLayout)super.withAttribute(name, value);
     }
 }
